@@ -16,33 +16,76 @@ var _ = { };
   // Return an array of the first n elements of an array. If n is undefined,
   // return just the first element.
   _.first = function(array, n) {
+    var arr = [];
+    if (!n) {
+      return array[0];
+    } else {
+      return array.splice(0, n);
+    }
   };
 
   // Like first, but for the last elements. If n is undefined, return just the
   // last element.
   _.last = function(array, n) {
+    if (!n) {
+      return array[array.length - 1];
+    } else if (array.length <= n) {
+      return array.splice(0, array.length);
+    } else {
+      return array.splice(array.length - n, n);
+    }
   };
 
   // Call iterator(value, key, collection) for each element of collection.
   // Accepts both arrays and objects.
   _.each = function(collection, iterator) {
+    for (var key in collection) {
+      iterator(collection[key], key, collection);
+    }
   };
 
   // Returns the index at which value can be found in the array, or -1 if value
   // is not present in the array.
   _.indexOf = function(array, target){
+    var flag = -1;
+    for(var i = 0; i < array.length; i++) {
+      if (array[i] === target) {
+        flag = i;
+        break;
+      }
+    }
+    return flag;
   };
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, iterator) {
+    for (var i = collection.length - 1; i >= 0; i--) {
+      if(!iterator(collection[i])) {
+        collection.splice(i, 1);
+      }
+    }
+    return collection;
   };
 
   // Return all elements of an array that don't pass a truth test.
   _.reject = function(collection, iterator) {
+    for (var i = collection.length - 1; i >= 0; i--) {
+      if(iterator(collection[i])) {
+        collection.splice(i, 1);
+      }
+    }
+    return collection;
   };
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
+    var uniqList = [];
+    for (var i = 0; i < array.length; i++) {
+      if (uniqList.indexOf(array[i]) === -1) {
+        uniqList.push(array[i]);
+      }
+    }
+    return uniqList;
   };
 
 
